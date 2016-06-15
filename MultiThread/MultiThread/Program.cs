@@ -10,7 +10,8 @@ namespace MultiThread
     #region Class Program
     class Program
     {
-        public bool done;
+        static bool done;
+        static readonly object locker = new object();
         static void Main(string[] args)
         {
             /* 1. Make Thread
@@ -33,10 +34,20 @@ namespace MultiThread
             new Thread(tt._Go).Start();
             tt._Go();
             */
+            new Thread(Go1).Start();
+            Go1();
             Console.ReadLine();           
         }
 
         #region Function
+        static void Go1()
+        {
+            lock (locker)
+            {
+                if (!done) { Console.WriteLine("Done");done = true; }
+            }
+        }
+
         void _Go()
         {
             if (!done)
