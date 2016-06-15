@@ -7,8 +7,10 @@ using System.Threading;
 
 namespace MultiThread
 {
+    #region Class Program
     class Program
     {
+        public bool done;
         static void Main(string[] args)
         {
             /* 1. Make Thread
@@ -21,12 +23,26 @@ namespace MultiThread
             }
             */
 
-            /*2. */
+            /*2. 
             new Thread(Go).Start(); // Call Go() on a new Thread
             Go(); // Call Go() as a function main.
+            */
 
-
+            /*3. Thread a same instance
+            Program tt = new Program();
+            new Thread(tt._Go).Start();
+            tt._Go();
+            */
             Console.ReadLine();           
+        }
+
+        #region Function
+        void _Go()
+        {
+            if (!done)
+            {
+                Console.WriteLine("Done"); done = true;
+            }
         }
         static void Go()
         {
@@ -41,5 +57,8 @@ namespace MultiThread
             for (int i = 0; i < 1000; i++) Console.Write("y");
             Console.WriteLine();
         }
+        #endregion
     }
+    #endregion
+
 }
